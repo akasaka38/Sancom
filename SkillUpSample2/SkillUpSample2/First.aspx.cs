@@ -202,11 +202,63 @@ namespace SkillUpSample2
                         else
                         {
                             sample = moji.Substring(0, 2);
+                            if(mojiGyou[sample] == null)
+                            {
+                                sample = moji.Substring(1, 1);
+                                test = mojiGyou[sample];
+                                returnMoji += moji.Substring(0, 1);
+                                returnMoji += test[boinNum[moji.Substring(2, 1)]];
+                            }
+                            else
+                            {
+                                test = mojiGyou[sample];
+                                returnMoji += test[boinNum[moji.Substring(2, 1)]];
+                            }
+                        }
+                        break;
+                    case 4:
+                        if(moji.Substring(0, 1) == moji.Substring(1, 1))
+                        {
+                            returnMoji += "っ";
+                        }
+                        else
+                        {
+                            returnMoji += moji.Substring(0, 1);
+                        }
+                        
+                        if (moji.Substring(1, 1) == moji.Substring(2, 1))
+                        {
+                            sample = moji.Substring(1, 1);
                             test = mojiGyou[sample];
-                            returnMoji += test[boinNum[moji.Substring(2, 1)]];
+                            returnMoji += "っ" + test[boinNum[moji.Substring(3, 1)]];
+                        }
+                        else
+                        {
+                            sample = moji.Substring(1, 2);
+                            if(mojiGyou[sample] == null)
+                            {
+                                sample = moji.Substring(2, 1);
+                                test = mojiGyou[sample];
+                                returnMoji += moji.Substring(1, 1);
+                                returnMoji += test[boinNum[moji.Substring(3, 1)]];
+                            }
+                            else
+                            {
+                                test = mojiGyou[sample];
+                                returnMoji += test[boinNum[moji.Substring(3, 1)]];
+                            }
                         }
                         break;
                     default:
+                        sample = moji.Substring(moji.Length - 1, 1);
+                        if(sample = "a" orelse sample = "i" orelse sample = "u" orelse sample = "e" orelse = "o")
+                        {
+                            
+                        }
+                        else
+                        {
+                            returnMoji += moji;
+                        }
                         break;
                 }
             }
