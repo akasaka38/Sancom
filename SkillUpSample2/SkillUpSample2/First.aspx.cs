@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Collections;
+using System.Windows;
 
 namespace SkillUpSample2
 {
@@ -18,27 +20,19 @@ namespace SkillUpSample2
 
         protected void Button_Click(object sender, EventArgs e)
         {
-            //ローマ字で入力されているかチェックすることも考える
-            String str = "";
+            String path = filename.Value;
+            System.Text.Encoding enc = System.Text.Encoding.GetEncoding("utf-8");
+            String str = System.IO.File.ReadAllText(path, enc);
 
-            using (StreamReader readText = new StreamReader(@"C:\Users\sancom260\Desktop\新しいテキスト ドキュメント (3).txt", System.Text.Encoding.GetEncoding("utf-8")))
-            {
-                //while((str = readText.ReadLine()) != null){
-                str = readText.ReadLine();
-                    //ローマ字の母音で区切る
-                    str = str.Replace("a", "a,");
-                    str = str.Replace("i", "i,");
-                    str = str.Replace("u", "u,");
-                    str = str.Replace("e", "e,");
-                    str = str.Replace("o", "o,");
-                    str = str.Replace("nn", "nn,");
-                //}
-            }
+            //ローマ字の母音で区切る
+            str = str.Replace("a", "a,");
+            str = str.Replace("i", "i,");
+            str = str.Replace("u", "u,");
+            str = str.Replace("e", "e,");
+            str = str.Replace("o", "o,");
+            str = str.Replace("nn", "nn,");
 
-            using (StreamWriter writeText = new StreamWriter(@"C:\Users\sancom260\Desktop\新しいテキスト ドキュメント (3).txt"))
-            {
-                writeText.WriteLine(Henkan(str));
-            }
+            System.IO.File.WriteAllText(path, Henkan(str), enc);
         }
 
         private String Henkan(String input)
@@ -87,8 +81,10 @@ namespace SkillUpSample2
             String[] sh = { "しゃ", "し", "しゅ", "しぇ", "しょ" };
             String[] sy = { "しゃ", "し", "しゅ", "しぇ", "しょ" };
             String[] sw = { "すぁ", "すぃ", "すぅ", "すぇ", "すぉ" };
-            String[] zy, jy = { "じゃ", "じぃ", "じゅ", "じぇ", "じょ"};
-            String[] ty, cy = { "ちゃ", "ちぃ", "ちゅ", "ちぇ", "ちょ" };
+            String[] zy = { "じゃ", "じぃ", "じゅ", "じぇ", "じょ"};
+            String[] jy = { "じゃ", "じぃ", "じゅ", "じぇ", "じょ" };
+            String[] ty = { "ちゃ", "ちぃ", "ちゅ", "ちぇ", "ちょ" };
+            String[] cy = { "ちゃ", "ちぃ", "ちゅ", "ちぇ", "ちょ" };
             String[] ch = { "ちゃ", "ち", "ちゅ", "ちぇ", "ちょ" };
             String[] ts = { "つぁ", "つぃ", "つ", "つぇ", "つぉ" };
             String[] th = { "てゃ", "てぃ", "てゅ", "てぇ", "てょ" };
@@ -104,7 +100,6 @@ namespace SkillUpSample2
             String[] vy = { "ヴゃ", "ヴぃ", "ヴゅ", "ヴぇ", "ヴょ" };
             String[] py = { "ぴゃ", "ぴぃ", "ぴゅ", "ぴぇ", "ぴょ" };
             String[] my = { "みゃ", "みぃ", "みゅ", "みぇ", "みょ" };
-            String[] ly, xy = { "ゃ", "ぃ", "ゅ", "ぇ", "ょ"};
             String[] ry = { "りゃ", "りぃ", "りゅ", "りぇ", "りょ" };
             
 
@@ -163,8 +158,6 @@ namespace SkillUpSample2
                 {"vy", vy},
                 {"py", py},
                 {"my", my},
-                {"ly", ly},
-                {"xy", xy},
                 {"ry", ry}
             };
 
@@ -250,15 +243,15 @@ namespace SkillUpSample2
                         }
                         break;
                     default:
-                        sample = moji.Substring(moji.Length - 1, 1);
-                        if(sample = "a" orelse sample = "i" orelse sample = "u" orelse sample = "e" orelse = "o")
-                        {
+                        //sample = moji.Substring(moji.Length, 1);
+                        //if(sample == "a" || sample == "i" || sample == "u" || sample == "e" || sample == "o")
+                        //{
                             
-                        }
-                        else
-                        {
-                            returnMoji += moji;
-                        }
+                        //}
+                        //else
+                        //{
+                        //    returnMoji += moji;
+                        //}
                         break;
                 }
             }
