@@ -24,13 +24,20 @@ namespace SkillUpSample2
             System.Text.Encoding enc = System.Text.Encoding.GetEncoding("utf-8");
             String str = System.IO.File.ReadAllText(path, enc);
 
+            str = str.ToLower();
+
             //ローマ字の母音で区切る
+            str = str.Replace(",", "、,");
             str = str.Replace("a", "a,");
             str = str.Replace("i", "i,");
             str = str.Replace("u", "u,");
             str = str.Replace("e", "e,");
             str = str.Replace("o", "o,");
             str = str.Replace("nn", "nn,");
+            str = str.Replace(" ", " ,");
+            str = str.Replace("-", "-,");
+            str = str.Replace("\n", "qq,");
+            str = str.Replace(".", "。,");
 
             System.IO.File.WriteAllText(path, Henkan(str), enc);
         }
@@ -101,6 +108,8 @@ namespace SkillUpSample2
             String[] py = { "ぴゃ", "ぴぃ", "ぴゅ", "ぴぇ", "ぴょ" };
             String[] my = { "みゃ", "みぃ", "みゅ", "みぇ", "みょ" };
             String[] ry = { "りゃ", "りぃ", "りゅ", "りぇ", "りょ" };
+            String[] xt = { "","","っ","",""};
+            String[] lt = { "", "", "っ", "", "" };
             
 
             //ひらがなの行を指定するための配列
@@ -158,10 +167,43 @@ namespace SkillUpSample2
                 {"vy", vy},
                 {"py", py},
                 {"my", my},
-                {"ry", ry}
+                {"ry", ry},
+                {"xt", xt},
+                {"lt", lt}
             };
 
-            String[] mojiretu = input.Split(',');
+            String[] mojiretuSample = input.Split(',');
+            List<String> mojiretu = new List<string>();
+
+            foreach (String i in mojiretuSample)
+            {
+                if(i == "")
+                {
+                    continue;
+                }
+
+                if(i.Substring(0, 1) != "n")
+                {
+                    mojiretu.Add(i);
+                }
+                else
+                {
+                    if(i.Substring(1, 1) == "a" || i.Substring(1, 1) == "i" || i.Substring(1, 1) == "u" || i.Substring(1, 1) == "e" || i.Substring(1, 1) == "o")
+                    {
+                        mojiretu.Add(i);
+                    }
+                    else if(i == "nn")
+                    {
+                        mojiretu.Add(i);
+                    }
+                    else
+                    {
+                        mojiretu.Add(i.Substring(0, 1));
+                        mojiretu.Add(i.Substring(1, 2));
+                    }
+                }
+            }
+            
             String returnMoji = "";
             String sample = "";
             String[] test;
@@ -171,11 +213,32 @@ namespace SkillUpSample2
                 switch(moji.Length)
                 {
                     case 1:
-                        returnMoji += a[boinNum[moji]];
+                        if (moji == "a" || moji == "i" || moji == "u" || moji == "e" || moji == "o")
+                        {
+                            returnMoji += a[boinNum[moji]];
+                        }
+                        else if (moji == "n")
+                        {
+                            returnMoji += "ん";
+                        }
+                        else
+                        {
+                            returnMoji += moji;
+                        }
+
+                        
                         break;
                     case 2:
+                        if(moji == "qq")
+                        {
+                            returnMoji += "\r\n";
+                            break;
+                        }
+
                         sample = moji.Substring(0, 1);
                         test = mojiGyou[sample];
+
+                        
                         if (moji.Substring(1, 1) == "n")
                         {
                             returnMoji += "ん";
