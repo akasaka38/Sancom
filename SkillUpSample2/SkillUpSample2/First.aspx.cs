@@ -226,7 +226,7 @@ namespace SkillUpSample2
                             returnMoji += moji;
                         }
 
-                        
+                        //
                         break;
                     case 2:
                         if(moji == "qq")
