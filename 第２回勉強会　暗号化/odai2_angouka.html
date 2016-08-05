@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content = "text/html; charset=UTF-8">
+    <title>暗号化・複号化</title>
+  </head>
+  <body>
+    <pre>
+      <script type = "text/javascript">
+      <!--
+      //暗号化
+      function angouka(base, height){
+        //入力された値を取得
+        var normalText = document.odai_form.normalText.value;
+        var result = ""
+
+        //一文字づつ暗号化していく
+        for(i = 0; i < normalText.length; i++){
+          var answer = normalText.charCodeAt(i) + 13;
+          result += String.fromCharCode(answer);
+        }
+
+        //暗号化した文字をテキストボックスに入れる
+        document.odai_form.angouText.value = result;
+      }
+
+      //復号化
+      function hukugouka(){
+        //入力された値を取得
+        var angouText = document.odai_form.angouText.value;
+        var result = ""
+
+        //一文字づつ復号化していく
+        for(i = 0; i < angouText.length; i++){
+          var answer = angouText.charCodeAt(i) - 13;
+          result += String.fromCharCode(answer);
+        }
+
+        //復号化した文字をテキストボックスに入れる
+        document.odai_form.normalText.value = result;
+      }
+      -->
+      </script>
+      <noscript>JavaScriptが利用できません</noscript>
+    </pre>
+    <h1>お題：暗号化・復号化</h1>
+    <form name="odai_form" id="odai_form">
+      <input type="text" id="normalText" />
+      <input type="button" value="暗号化" onclick="angouka()" />
+      <input type="button" value="復号化" onclick="hukugouka()">
+      <input type="text" id="angouText" />
+    </form>
+  </body>
+</html>
